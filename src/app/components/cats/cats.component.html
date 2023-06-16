@@ -1,22 +1,38 @@
 <div class="catsComponent">
-
   <form [formGroup]="form">
+
     <mat-form-field>
-      <mat-label> Choose category </mat-label>
+      <mat-label>Choose category</mat-label>
       <mat-select formControlName="selectedCategory">
         <mat-option> All categories </mat-option>
-        <mat-option *ngFor="let breed of (breedsList | async)"
-                    [value]="breed.name"
-                    (click)="filterImages()"
-        >
+        <mat-option *ngFor="let breed of (breedsList | async)" [value]="breed.name">
           {{ breed.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label> Set page count items </mat-label>
+      <mat-select formControlName="imageItems" (selectionChange)="changeCount()">
+        <mat-option *ngFor="let count of imageItemsPerPage" [value]="count">
+          {{ count }} items
         </mat-option>
       </mat-select>
     </mat-form-field>
   </form>
 
   <main class="imagesList">
-    <div></div>
+    <ng-container *ngIf="imagesList | async as images; else dataLoading">
+      <div *ngFor="let image of images">
+        <img [src]="image.url" alt="catImage">
+      </div>
+    </ng-container>
   </main>
 
+  <ng-template #dataLoading>
+    <div class="spinner">
+      <h4>Loading</h4>
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
 </div>

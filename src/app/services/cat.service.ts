@@ -1,30 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BreedModel } from '../models/breed.model';
+import { ImageModel } from '../models/image.model';
 import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CatService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllBreedsList():Observable<BreedModel[]> {
-    return this.httpClient.get<BreedModel[]>(`${environment.apiUrl}/breeds`, {
-      headers: new HttpHeaders({
+  public getAllBreedsList(limit: number): Observable<BreedModel[]> {
 
-      })
-    })
+    let params: HttpParams = new HttpParams();
+    params = params.set('limit', limit.toString());
+
+    return this.httpClient.get<BreedModel[]>(`${environment.apiUrl}/breeds`,{ params: params });
   }
 
-  public getAllCatsImages():Observable<any> {
-    return this.httpClient.get(`${environment.apiUrl}/images/search`, {
-      headers: new HttpHeaders({
-
-      })
-    });
+  public getAllCatsImages(limit: number, category?: string): Observable<ImageModel[]> {
+    let params: HttpParams = new HttpParams();
+    params = params.set('limit', limit.toString());
+    if (category) {
+      params.set('breed_ids', category);
+    }
+    return this.httpClient.get<ImageModel[]>(`${environment.apiUrl}/images/search`,{ params: params });
   }
 
 }
