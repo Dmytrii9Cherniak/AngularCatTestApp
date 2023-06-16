@@ -22,9 +22,9 @@ import { MaterialModule } from './material.module';
     MaterialModule
   ],
   providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: CatsApiKeyInterceptor,
-    multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: CatsApiKeyInterceptor,
+      multi: true
   }],
   bootstrap: [AppComponent]
 })

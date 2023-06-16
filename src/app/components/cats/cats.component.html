@@ -1,1 +1,22 @@
-<p>cats works!</p>
+<div class="catsComponent">
+
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label> Choose category </mat-label>
+      <mat-select formControlName="selectedCategory">
+        <mat-option> All categories </mat-option>
+        <mat-option *ngFor="let breed of (breedsList | async)"
+                    [value]="breed.name"
+                    (click)="filterImages()"
+        >
+          {{ breed.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <main class="imagesList">
+    <div></div>
+  </main>
+
+</div>

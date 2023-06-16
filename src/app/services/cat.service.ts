@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CategoriesModel } from '../models/categories.model';
-import {environment} from "../environments/environment";
+import { BreedModel } from '../models/breed.model';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +11,20 @@ export class CatService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllBreedsList():Observable<any> {
-    return this.httpClient.get(``)
+  public getAllBreedsList():Observable<BreedModel[]> {
+    return this.httpClient.get<BreedModel[]>(`${environment.apiUrl}/breeds`, {
+      headers: new HttpHeaders({
+
+      })
+    })
   }
 
-  public getCatsByBreed():Observable<any> {
-    return this.httpClient.get(``);
-  }
+  public getAllCatsImages():Observable<any> {
+    return this.httpClient.get(`${environment.apiUrl}/images/search`, {
+      headers: new HttpHeaders({
 
-  public getAllBreedsCategories():Observable<CategoriesModel[]> {
-    return this.httpClient.get<CategoriesModel[]>(`${environment.apiUrl}/categories`);
+      })
+    });
   }
 
 }
