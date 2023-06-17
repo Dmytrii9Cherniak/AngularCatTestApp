@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CatService } from '../../services/cat.service';
 import { Observable } from 'rxjs';
 import { BreedModel } from '../../models/breed.model';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ImageModel } from '../../models/image.model';
 
 @Component({
@@ -24,12 +24,11 @@ export class CatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      imageItems: new FormControl(this.imageItemsPerPage[1]),
-      selectedBreed: new FormControl('')
+      imageItems: [this.imageItemsPerPage[1]],
+      selectedBreed: ['']
     });
     this.breedsList = this.catService.getAllBreedsList(this.getImageItemsField()?.value);
     this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
-    console.log(this.getImageItemsField()?.value);
   }
 
   public getImageItemsField() {
@@ -38,10 +37,6 @@ export class CatsComponent implements OnInit {
 
   public getCategoryFormField() {
     return this.form.get('selectedBreed');
-  }
-
-  getValue() {
-    console.log(this.getCategoryFormField()?.value)
   }
 
   public filterCats(): void {

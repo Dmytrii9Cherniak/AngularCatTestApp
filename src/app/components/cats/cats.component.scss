@@ -6,7 +6,9 @@
 
     form {
       display: flex;
-      column-gap: 40px;
+      align-items: center;
+      flex-direction: column;
+      row-gap: 40px;
     }
 
   .imagesList {

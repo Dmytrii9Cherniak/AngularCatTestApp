@@ -1,23 +1,28 @@
 <div class="catsComponent">
   <form [formGroup]="form">
 
-    <mat-chip-listbox aria-label="Fish selection" formControlName="selectedBreed">
-      <mat-chip-option
-        *ngFor="let breed of (breedsList | async)"
-        [value]="breed.id"
-        (click)="filterCats()"> {{ breed.name }} </mat-chip-option>
-    </mat-chip-listbox>
+    <div>
+      <mat-chip-listbox aria-label="Fish selection" formControlName="selectedBreed">
+        <mat-chip-option
+          *ngFor="let breed of (breedsList | async)"
+          [value]="breed.id"
+          (click)="filterCats()"> {{ breed.name }} </mat-chip-option>
+      </mat-chip-listbox>
+    </div>
 
-    <mat-form-field>
-      <mat-label>Set page count items</mat-label>
-      <mat-select
-        formControlName="imageItems"
-        (selectionChange)="filterCats()">
-        <mat-option
-          *ngFor="let count of imageItemsPerPage"
-          [value]="count"> {{ count }} items </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div>
+      <mat-form-field>
+        <mat-label>Set page count items</mat-label>
+        <mat-select
+          formControlName="imageItems"
+          (selectionChange)="filterCats()">
+          <mat-option
+            *ngFor="let count of imageItemsPerPage"
+            [value]="count"> {{ count }} items </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
   </form>
 
   <main class="imagesList">
