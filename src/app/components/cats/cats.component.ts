@@ -27,23 +27,24 @@ export class CatsComponent implements OnInit {
       imageItems: new FormControl(this.imageItemsPerPage[1]),
       selectedCategory: new FormControl('')
     });
-    this.breedsList = this.catService.getAllBreedsList(this.getLimit());
-    this.imagesList = this.catService.getAllCatsImages(this.getLimit());
+    this.breedsList = this.catService.getAllBreedsList(this.getCategoryFormField()?.value);
+    this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
   }
 
-  public getLimit(): number {
-    return this.form.get('imageItems')?.value;
+  public getImageItemsField() {
+    return this.form.get('imageItems');
   }
 
-  public getCategory(): string {
-    return this.form.get('selectedCategory')?.value;
+  public getCategoryFormField() {
+    return this.form.get('selectedCategory');
   }
 
   public changeCount(): void {
-    if (this.getCategory() !== 'reset' && this.getCategory()) {
-      this.imagesList = this.catService.getAllCatsImages(this.getLimit(), this.getCategory());
+    const category: string = this.getCategoryFormField()?.value;
+    if (category !== 'reset' && category) {
+      this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value, category);
     } else {
-      this.imagesList = this.catService.getAllCatsImages(this.getLimit());
+      this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
     }
   }
 }

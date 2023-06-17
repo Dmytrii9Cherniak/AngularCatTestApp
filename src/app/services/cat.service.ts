@@ -25,7 +25,7 @@ export class CatService {
     let params: HttpParams = new HttpParams();
     params = params.set('limit', limit.toString());
     if (category) {
-      params.set('breed_ids', category);
+      params = params.set('breed_ids', category);
     }
     return this.httpClient.get<ImageModel[]>(`${environment.apiUrl}/images/search`,{ params: params });
   }

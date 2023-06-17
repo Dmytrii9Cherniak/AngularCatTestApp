@@ -1,18 +1,17 @@
 <div class="catsComponent">
   <form [formGroup]="form">
-
     <mat-form-field>
       <mat-label>Choose category</mat-label>
-      <mat-select formControlName="selectedCategory">
-        <mat-option> All categories </mat-option>
-        <mat-option *ngFor="let breed of (breedsList | async)" [value]="breed.name">
+      <mat-select formControlName="selectedCategory" (selectionChange)="changeCount()">
+        <mat-option value="reset">All categories</mat-option>
+        <mat-option *ngFor="let breed of (breedsList | async)" [value]="breed.id">
           {{ breed.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label> Set page count items </mat-label>
+      <mat-label>Set page count items</mat-label>
       <mat-select formControlName="imageItems" (selectionChange)="changeCount()">
         <mat-option *ngFor="let count of imageItemsPerPage" [value]="count">
           {{ count }} items
