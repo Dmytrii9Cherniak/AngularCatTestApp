@@ -16,6 +16,7 @@ export class CatsComponent implements OnInit {
   public form: FormGroup;
   public breedsList: Observable<BreedModel[]>;
   public imagesList: Observable<ImageModel[]>;
+  public page: number = 0;
 
   constructor(
     private catService: CatService,
@@ -27,7 +28,7 @@ export class CatsComponent implements OnInit {
       imageItems: [this.imageItemsPerPage[1]],
       selectedBreed: ['']
     });
-    this.breedsList = this.catService.getAllBreedsList(this.getImageItemsField()?.value);
+    this.breedsList = this.catService.getAllBreedsList(this.page);
     this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
   }
 
@@ -35,16 +36,22 @@ export class CatsComponent implements OnInit {
     return this.form.get('imageItems');
   }
 
-  public getCategoryFormField() {
+  public getBreedFormField() {
     return this.form.get('selectedBreed');
   }
 
   public filterCats(): void {
-    const selectedBreed = this.getCategoryFormField()?.value;
+    const selectedBreed = this.getBreedFormField()?.value;
     if (selectedBreed !== 'reset' && selectedBreed) {
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value, selectedBreed);
     } else {
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
     }
   }
+
+  public navigatePage(direction: string): void {
+    this.page += direction === 'previous' ? -1 : 1;
+    this.breedsList = this.catService.getAllBreedsList(this.page);
+  }
+
 }

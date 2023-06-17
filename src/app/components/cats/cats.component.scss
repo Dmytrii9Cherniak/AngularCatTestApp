@@ -9,6 +9,19 @@
       align-items: center;
       flex-direction: column;
       row-gap: 40px;
+
+      header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 22px;
+      };
+
+      main {
+        display: flex;
+        column-gap: 24px;
+      }
+
     }
 
   .imagesList {

@@ -1,16 +1,33 @@
 <div class="catsComponent">
   <form [formGroup]="form">
 
-    <div>
+    <header>
+      <header>
+        <button
+          mat-raised-button color="primary"
+          *ngIf="page !== 0"
+          (click)="navigatePage('previous')"> Попередня </button>
+      </header>
+      <main>
       <mat-chip-listbox aria-label="Fish selection" formControlName="selectedBreed">
         <mat-chip-option
           *ngFor="let breed of (breedsList | async)"
           [value]="breed.id"
           (click)="filterCats()"> {{ breed.name }} </mat-chip-option>
       </mat-chip-listbox>
-    </div>
+      </main>
+      <footer>
+        <button
+          mat-raised-button color="primary"
+          *ngIf="page === 0 || page !== 0"
+          (click)="navigatePage('next')"> Наступна </button>
+      </footer>
+    </header>
 
-    <div>
+    <main>
+      <main>
+        <button mat-raised-button color="primary" *ngIf="getBreedFormField()?.value"> Reset breeds </button>
+      </main>
       <mat-form-field>
         <mat-label>Set page count items</mat-label>
         <mat-select
@@ -21,7 +38,7 @@
             [value]="count"> {{ count }} items </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </main>
 
   </form>
 
