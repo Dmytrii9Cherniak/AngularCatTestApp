@@ -32,7 +32,7 @@ export class CatsComponent implements OnInit {
     this.breedsList = this.catService.getAllBreedsList(this.page);
     this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
     this.hasNextPage = this.catService.getAllBreedsList(this.page + 1).pipe(
-      map(breeds => breeds.length > 0)
+      map((breeds: BreedModel[]) :boolean => breeds.length > 0)
     );
   }
 
@@ -44,11 +44,13 @@ export class CatsComponent implements OnInit {
     return this.form.get('selectedBreed');
   }
 
-  public filterCats(): void {
+  public filterCats(isReset?: boolean): void {
     const selectedBreed = this.getBreedFormField()?.value;
-    if (selectedBreed !== 'reset' && selectedBreed) {
+    if (selectedBreed && !isReset) {
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value, selectedBreed);
-    } else {
+    } else if (isReset) {
+      this.getBreedFormField()?.setValue(null);
+      console.log(this.getBreedFormField()?.value)
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
     }
   }
@@ -57,7 +59,7 @@ export class CatsComponent implements OnInit {
     this.page += direction === 'previous' ? -1 : 1;
     this.breedsList = this.catService.getAllBreedsList(this.page);
     this.hasNextPage = this.catService.getAllBreedsList(this.page + 1).pipe(
-      map(breeds => breeds.length > 0)
+      map((breeds: BreedModel[]) :boolean => breeds.length > 0)
     )
   }
 

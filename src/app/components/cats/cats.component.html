@@ -26,7 +26,11 @@
 
     <main>
       <main>
-        <button mat-raised-button color="primary" *ngIf="getBreedFormField()?.value"> Reset breeds </button>
+        <button mat-raised-button color="primary"
+                *ngIf="getBreedFormField()?.value"
+                value="reset"
+                (click)="filterCats(true)"
+        > Reset breeds </button>
       </main>
       <mat-form-field>
         <mat-label>Set page count items</mat-label>
