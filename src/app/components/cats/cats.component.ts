@@ -25,10 +25,11 @@ export class CatsComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       imageItems: new FormControl(this.imageItemsPerPage[1]),
-      selectedCategory: new FormControl('')
+      selectedBreed: new FormControl('')
     });
-    this.breedsList = this.catService.getAllBreedsList(this.getCategoryFormField()?.value);
+    this.breedsList = this.catService.getAllBreedsList(this.getImageItemsField()?.value);
     this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
+    console.log(this.getImageItemsField()?.value);
   }
 
   public getImageItemsField() {
@@ -36,13 +37,17 @@ export class CatsComponent implements OnInit {
   }
 
   public getCategoryFormField() {
-    return this.form.get('selectedCategory');
+    return this.form.get('selectedBreed');
   }
 
-  public changeCount(): void {
-    const category: string = this.getCategoryFormField()?.value;
-    if (category !== 'reset' && category) {
-      this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value, category);
+  getValue() {
+    console.log(this.getCategoryFormField()?.value)
+  }
+
+  public filterCats(): void {
+    const selectedBreed = this.getCategoryFormField()?.value;
+    if (selectedBreed !== 'reset' && selectedBreed) {
+      this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value, selectedBreed);
     } else {
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
     }
