@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CatService } from '../../services/cat.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BreedModel } from '../../models/breed.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ImageModel } from '../../models/image.model';
@@ -17,6 +17,7 @@ export class CatsComponent implements OnInit {
   public breedsList: Observable<BreedModel[]>;
   public imagesList: Observable<ImageModel[]>;
   public page: number = 0;
+  public hasNextPage: Observable<boolean>;
 
   constructor(
     private catService: CatService,
@@ -30,6 +31,9 @@ export class CatsComponent implements OnInit {
     });
     this.breedsList = this.catService.getAllBreedsList(this.page);
     this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
+    this.hasNextPage = this.catService.getAllBreedsList(this.page + 1).pipe(
+      map(breeds => breeds.length > 0)
+    );
   }
 
   public getImageItemsField() {
@@ -52,6 +56,9 @@ export class CatsComponent implements OnInit {
   public navigatePage(direction: string): void {
     this.page += direction === 'previous' ? -1 : 1;
     this.breedsList = this.catService.getAllBreedsList(this.page);
+    this.hasNextPage = this.catService.getAllBreedsList(this.page + 1).pipe(
+      map(breeds => breeds.length > 0)
+    )
   }
 
 }

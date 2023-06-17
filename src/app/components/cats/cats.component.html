@@ -3,10 +3,10 @@
 
     <header>
       <header>
-        <button
-          mat-raised-button color="primary"
-          *ngIf="page !== 0"
-          (click)="navigatePage('previous')"> Попередня </button>
+          <button
+            mat-raised-button color="primary"
+            *ngIf="page !== 0"
+            (click)="navigatePage('previous')"> Попередня </button>
       </header>
       <main>
       <mat-chip-listbox aria-label="Fish selection" formControlName="selectedBreed">
@@ -19,7 +19,7 @@
       <footer>
         <button
           mat-raised-button color="primary"
-          *ngIf="page === 0 || page !== 0"
+          *ngIf="(hasNextPage | async)"
           (click)="navigatePage('next')"> Наступна </button>
       </footer>
     </header>
