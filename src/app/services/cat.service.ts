@@ -21,11 +21,11 @@ export class CatService {
     return this.httpClient.get<BreedModel[]>(`${environment.apiUrl}/breeds`,{ params: params });
   }
 
-  public getAllCatsImages(limit: number, category?: string): Observable<ImageModel[]> {
+  public getAllCatsImages(limit: number, breed?: string): Observable<ImageModel[]> {
     let params: HttpParams = new HttpParams();
     params = params.set('limit', limit.toString());
-    if (category) {
-      params = params.set('breed_ids', category);
+    if (breed) {
+      params = params.set('breed_ids', breed);
     }
     return this.httpClient.get<ImageModel[]>(`${environment.apiUrl}/images/search`,{ params: params });
   }
