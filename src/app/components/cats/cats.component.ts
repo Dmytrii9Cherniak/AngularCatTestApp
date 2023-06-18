@@ -16,8 +16,8 @@ export class CatsComponent implements OnInit {
   public form: FormGroup;
   public breedsList: Observable<BreedModel[]>;
   public imagesList: Observable<ImageModel[]>;
-  public page: number = 0;
   public hasNextPage: Observable<boolean>;
+  public page: number = 0;
 
   constructor(
     private catService: CatService,
@@ -50,7 +50,6 @@ export class CatsComponent implements OnInit {
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value, selectedBreed);
     } else if (isReset) {
       this.getBreedFormField()?.setValue(null);
-      console.log(this.getBreedFormField()?.value)
       this.imagesList = this.catService.getAllCatsImages(this.getImageItemsField()?.value);
     }
   }
